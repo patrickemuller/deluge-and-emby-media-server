@@ -1,0 +1,2 @@
+# Media HDDs: BFQ honours ionice so streaming reads beat bulk writes; big readahead for sequential reads
+ACTION=="add|change", KERNEL=="sd[a-z]|sd[a-z][a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq", ATTR{queue/read_ahead_kb}="4096"

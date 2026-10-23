@@ -1,0 +1,15 @@
+# Example /etc/fstab lines for media drives.
+# Find each drive's UUID and filesystem with `lsblk -f`. Mounting by UUID keeps the
+# path stable even when USB disks come up in a different order (sda/sdb swap).
+# noatime: reads no longer write an access time back to the disk.
+# nofail:  boot continues if a USB drive is unplugged.
+
+# ext4 (recommended): ownership and permissions live on the disk; set them with
+# chgrp/chmod/setfacl as described in docs/permissions.md.
+UUID=<uuid-of-media-disk-1>  /mnt/media1  ext4  defaults,noatime,nofail  0  2
+
+# NTFS or exFAT (drives often ship formatted this way): the disk cannot store Linux
+# owners, so the mount options decide who may write. uid = the torrent client's user,
+# gid = the shared media group (`getent group media`), umask=0002 = group can write.
+#UUID=<uuid-of-ntfs-disk>   /mnt/media2  ntfs3  defaults,noatime,nofail,uid=<deluge-uid>,gid=<media-gid>,umask=0002  0  0
+#UUID=<uuid-of-exfat-disk>  /mnt/media2  exfat  defaults,noatime,nofail,uid=<deluge-uid>,gid=<media-gid>,umask=0002  0  0
